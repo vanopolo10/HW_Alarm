@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -8,30 +7,27 @@ public class Thief : MonoBehaviour
     [SerializeField] private float _speed = 3;
     
     private int _placeIndex;
-    private Vector3 _positionToGo;
+    private Vector3 _target;
 
     private void Awake()
     {
         _placeIndex = 0;
-        _positionToGo = GetNextPlace();
+        _target = GetNextPlace();
     }
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _positionToGo, _speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, _target, _speed * Time.deltaTime);
 
-        if (transform.position == _positionToGo)
+        if (transform.position == _target)
         {
-            _positionToGo = GetNextPlace();
-            
+            _target = GetNextPlace();
         }
     }
     
     private Vector3 GetNextPlace()
     {
         _placeIndex = ++_placeIndex % _places.Length;
-        Vector3 thisPointVector = _places[_placeIndex];
-        
-        return thisPointVector;
+        return  _places[_placeIndex];
     }
 }
